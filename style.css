@@ -77,54 +77,22 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
-.monthly-summary-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 12px;
-    padding: 5px 20px 15px 20px;
-    scrollbar-width: none;
-    /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none;
-    /* Hide scrollbar for IE/Edge */
-}
-
-.monthly-summary-container::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar for Chrome/Safari */
-}
-
-.summary-card-small {
-    flex: 0 0 140px;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
+.grand-total-bar {
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: white;
+    padding: 16px 24px;
     border-radius: 12px;
-    padding: 12px;
     text-align: center;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s;
-}
-
-.summary-card-small:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.summary-card-small .month-name {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-}
-
-.summary-card-small .month-amount {
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 800;
-    color: var(--text);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    margin: 0 10px;
 }
 
-.summary-card-small .month-amount.has-value {
-    color: var(--success);
+#grandTotalAmount {
+    font-feature-settings: "tnum";
+    color: #34d399;
+    /* Success green/cyan highlight */
 }
 
 /* Table */

@@ -12,7 +12,7 @@ function toggleAdmin() {
 }
 
 function login() {
-    if (document.getElementById("pass").value === "adm") {
+    if (document.getElementById("pass").value === "admin") {
         document.getElementById("loginSection").classList.add("hidden");
         document.getElementById("controls").classList.remove("hidden");
         populateMembersDropdown();
@@ -54,12 +54,12 @@ function populateMembersDropdown() {
 
     // Save current selection to restore after refresh
     const currentVal = sel.value;
-    sel.innerHTML = '<option value="">Select Member No</option>';
+    sel.innerHTML = '<option value="">Select Member (ID + Name)</option>';
 
     membersData.forEach(m => {
         const opt = document.createElement("option");
         opt.value = m.id;
-        opt.textContent = `Member ${m.id}`;
+        opt.textContent = `${m.id} - ${m.name}`;
         sel.appendChild(opt);
     });
 
@@ -78,9 +78,7 @@ function renderTable() {
     const body = document.getElementById("tableBody");
     body.innerHTML = "";
 
-    // Track monthly totals for the top summary cards
-    const monthlyTotals = {};
-    months.forEach(mon => monthlyTotals[mon] = 0);
+    let grandTotal = 0;
 
     membersData.forEach(m => {
         let row = `<tr>`;
@@ -91,7 +89,7 @@ function renderTable() {
         months.forEach(mon => {
             const val = m.payments ? (m.payments[mon] || 0) : 0;
             memberTotal += val;
-            monthlyTotals[mon] += val;
+            grandTotal += val;
 
             if (val > 0) {
                 row += `<td class="paid-cell"><div class="paid-badge">₹${val}<span>✅</span></div></td>`;
@@ -105,27 +103,14 @@ function renderTable() {
         body.innerHTML += row;
     });
 
-    renderMonthlySummary(monthlyTotals);
+    renderGrandTotal(grandTotal);
 }
 
-function renderMonthlySummary(totals) {
-    const container = document.getElementById("monthlySummary");
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    months.forEach(mon => {
-        const amount = totals[mon] || 0;
-        const card = document.createElement("div");
-        card.className = "summary-card-small";
-
-        card.innerHTML = `
-            <div class="month-name">${mon}</div>
-            <div class="month-amount ${amount > 0 ? 'has-value' : ''}">₹${amount}</div>
-            <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 2px;">Collected</div>
-        `;
-        container.appendChild(card);
-    });
+function renderGrandTotal(total) {
+    const amountEl = document.getElementById("grandTotalAmount");
+    if (amountEl) {
+        amountEl.innerText = `₹${total}`;
+    }
 }
 
 async function savePayment() {
