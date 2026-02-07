@@ -12,7 +12,7 @@ function toggleAdmin() {
 }
 
 function login() {
-    if (document.getElementById("pass").value === "admin") {
+    if (document.getElementById("pass").value === "admin123") {
         document.getElementById("loginSection").classList.add("hidden");
         document.getElementById("controls").classList.remove("hidden");
         populateMembersDropdown();
