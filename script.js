@@ -12,7 +12,7 @@ function toggleAdmin() {
 }
 
 function login() {
-    if (document.getElementById("pass").value === "admin123") {
+    if (document.getElementById("pass").value === "adm") {
         document.getElementById("loginSection").classList.add("hidden");
         document.getElementById("controls").classList.remove("hidden");
         populateMembersDropdown();
@@ -21,12 +21,26 @@ function login() {
     }
 }
 
+const defaultNames = {
+    1: "Ramani", 2: "Karthik", 3: "Santhosh", 4: "Kaliappan", 5: "Lokesh",
+    6: "Sigamani", 7: "Ramakrishnan", 8: "Thavamani", 9: "Vinoth", 10: "Sathish", 11: "Perumal"
+};
+
 async function fetchData() {
     try {
         const res = await fetch(URL, { headers: { 'X-Master-Key': API_KEY } });
         const json = await res.json();
-        // Handle both direct array or { members: [] } structure
-        membersData = json.record.members || json.record;
+        let data = json.record.members || json.record;
+
+        // Ensure all 11 members exist
+        for (let i = 1; i <= 11; i++) {
+            if (!data.find(m => m.id == i)) {
+                data.push({ id: i, name: defaultNames[i], payments: {} });
+            }
+        }
+
+        // Sort by ID naturally
+        membersData = data.sort((a, b) => parseInt(a.id) - parseInt(b.id));
         renderTable();
         populateMembersDropdown();
     } catch (err) {
@@ -64,9 +78,9 @@ function renderTable() {
     const body = document.getElementById("tableBody");
     body.innerHTML = "";
 
-    // Detect current month short name (e.g., "Feb")
-    const currentMonth = new Date().toLocaleString('en-US', { month: 'short' });
-    let totalCollectionThisMonth = 0;
+    // Track monthly totals for the top summary cards
+    const monthlyTotals = {};
+    months.forEach(mon => monthlyTotals[mon] = 0);
 
     membersData.forEach(m => {
         let row = `<tr>`;
@@ -77,10 +91,7 @@ function renderTable() {
         months.forEach(mon => {
             const val = m.payments ? (m.payments[mon] || 0) : 0;
             memberTotal += val;
-
-            if (mon === currentMonth) {
-                totalCollectionThisMonth += val;
-            }
+            monthlyTotals[mon] += val;
 
             if (val > 0) {
                 row += `<td class="paid-cell"><div class="paid-badge">₹${val}<span>✅</span></div></td>`;
@@ -94,8 +105,27 @@ function renderTable() {
         body.innerHTML += row;
     });
 
-    document.getElementById("monthTotal").innerText = `₹${totalCollectionThisMonth}`;
-    document.getElementById("monthLabel").innerText = `Total Collection (${currentMonth})`;
+    renderMonthlySummary(monthlyTotals);
+}
+
+function renderMonthlySummary(totals) {
+    const container = document.getElementById("monthlySummary");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    months.forEach(mon => {
+        const amount = totals[mon] || 0;
+        const card = document.createElement("div");
+        card.className = "summary-card-small";
+
+        card.innerHTML = `
+            <div class="month-name">${mon}</div>
+            <div class="month-amount ${amount > 0 ? 'has-value' : ''}">₹${amount}</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 2px;">Collected</div>
+        `;
+        container.appendChild(card);
+    });
 }
 
 async function savePayment() {

@@ -19,7 +19,7 @@
             <div id="loginSection">
                 <h3 style="margin-bottom: 10px;">Admin Access</h3>
                 <div class="form-group">
-                    <input type="password" id="pass" placeholder="Enter Password (admin123)">
+                    <input type="password" id="pass" placeholder="Enter Password (adm)">
                 </div>
                 <button class="btn-primary" onclick="login()">Unlock Dashboard</button>
             </div>
@@ -72,11 +72,9 @@
             </div>
         </div>
 
-        <!-- Public View Section -->
         <header class="sticky-header">
-            <div class="summary-card">
-                <p class="summary-title" id="monthLabel">Total Collection (This Month)</p>
-                <p class="summary-value" id="monthTotal">₹0</p>
+            <div id="monthlySummary" class="monthly-summary-container">
+                <!-- Populated by script.js -->
             </div>
         </header>
 
