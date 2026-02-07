@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kovil Trust - Contribution Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Admin Panel Toggle -->
+    <button class="admin-toggle-btn" onclick="toggleAdmin()">Admin Panel</button>
+
+    <div class="container">
+        <!-- Admin Panel (Slide-down) -->
+        <div id="adminPanel" class="admin-panel shadow-inner">
+            <div id="loginSection">
+                <h3 style="margin-bottom: 10px;">Admin Access</h3>
+                <div class="form-group">
+                    <input type="password" id="pass" placeholder="Enter Password (admin123)">
+                </div>
+                <button class="btn-primary" onclick="login()">Unlock Dashboard</button>
+            </div>
+
+            <div id="controls" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>Admin Controls</h3>
+                    <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;"
+                        onclick="location.reload()">Lock</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Member Number (1-11)</label>
+                    <select id="member"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Member Name</label>
+                    <input type="text" id="memberName" placeholder="Edit Name">
+                </div>
+
+                <div class="form-group">
+                    <label>Select Month</label>
+                    <select id="month">
+                        <option value="Jan">January</option>
+                        <option value="Feb">February</option>
+                        <option value="Mar">March</option>
+                        <option value="Apr">April</option>
+                        <option value="May">May</option>
+                        <option value="Jun">June</option>
+                        <option value="Jul">July</option>
+                        <option value="Aug">August</option>
+                        <option value="Sep">September</option>
+                        <option value="Oct">October</option>
+                        <option value="Nov">November</option>
+                        <option value="Dec">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter Amount (₹)</label>
+                    <input type="number" id="amount" placeholder="e.g. 500">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-success" onclick="savePayment()">Save Changes</button>
+                    <button class="btn-danger" onclick="clearPayment()">Clear (₹0)</button>
+                </div>
+                <p id="saveStatus" style="font-size: 0.8rem; text-align: center; margin-top: 10px;"></p>
+            </div>
+        </div>
+
+        <!-- Public View Section -->
+        <header class="sticky-header">
+            <div class="summary-card">
+                <p class="summary-title" id="monthLabel">Total Collection (This Month)</p>
+                <p class="summary-value" id="monthTotal">₹0</p>
+            </div>
+        </header>
+
+        <main style="margin-top: 10px;">
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div class="table-container">
+                    <table id="publicTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Member Name</th>
+                                <th>Jan</th>
+                                <th>Feb</th>
+                                <th>Mar</th>
+                                <th>Apr</th>
+                                <th>May</th>
+                                <th>Jun</th>
+                                <th>Jul</th>
+                                <th>Aug</th>
+                                <th>Sep</th>
+                                <th>Oct</th>
+                                <th>Nov</th>
+                                <th>Dec</th>
+                                <th style="background: #f1f5f9;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Populated by script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Include the script file -->
+    <script src="script.js"></script>
+</body>
+
+</html>
