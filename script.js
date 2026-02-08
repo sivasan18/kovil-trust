@@ -11,14 +11,35 @@ function toggleAdmin() {
     panel.style.display = panel.style.display === "none" ? "block" : "none";
 }
 
+let lastTapTime = 0;
+function handleAdminTap() {
+    const currentTime = new Date().getTime();
+    if (currentTime - lastTapTime < 1000) {
+        toggleAdmin();
+        lastTapTime = 0;
+    } else {
+        lastTapTime = currentTime;
+    }
+}
+
+let isAdminUnlocked = false;
 function login() {
     if (document.getElementById("pass").value === "admin123") {
+        isAdminUnlocked = true;
         document.getElementById("loginSection").classList.add("hidden");
         document.getElementById("controls").classList.remove("hidden");
         populateMembersDropdown();
     } else {
         alert("Wrong password");
     }
+}
+
+function lockAdmin() {
+    isAdminUnlocked = false;
+    document.getElementById("loginSection").classList.remove("hidden");
+    document.getElementById("controls").classList.add("hidden");
+    document.getElementById("pass").value = "";
+    toggleAdmin();
 }
 
 const defaultNames = {
