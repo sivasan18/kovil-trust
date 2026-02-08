@@ -35,10 +35,6 @@ body {
 
 /* Admin Toggle */
 .admin-toggle-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
     padding: 8px 16px;
     background: var(--primary);
     color: white;
@@ -46,8 +42,9 @@ body {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .admin-toggle-btn:hover {
@@ -72,21 +69,46 @@ body {
     z-index: 100;
     background: rgba(253, 253, 253, 0.9);
     backdrop-filter: blur(8px);
-    padding: 10px 0;
+    padding: 15px 20px;
     margin-bottom: 20px;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .grand-total-bar {
     background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
     color: white;
-    padding: 16px 24px;
+    padding: 12px 24px;
     border-radius: 12px;
-    text-align: center;
-    font-size: 1.25rem;
+    text-align: left;
+    font-size: 1.1rem;
     font-weight: 800;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-    margin: 0 10px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+    flex-grow: 1;
+}
+
+@media (max-width: 480px) {
+    .sticky-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .grand-total-bar {
+        text-align: center;
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .admin-toggle-btn {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 #grandTotalAmount {
