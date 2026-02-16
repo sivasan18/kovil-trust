@@ -44,7 +44,7 @@ function lockAdmin() {
 
 const defaultNames = {
     1: "Ramani", 2: "Karthik", 3: "Santhosh", 4: "Kaliappan", 5: "Lokesh",
-    6: "Sigamani", 7: "Ramakrishnan", 8: "Thavamani", 9: "Vinoth", 10: "Sathish", 11: "Perumal", 12: "Janarthanan"
+    6: "Sigamani", 7: "Ramakrishnan", 8: "Thavamani", 9: "Vinoth", 10: "Sathish", 11: "Perumal", 12: "Janarthanan", 13: "Ponnappan"
 };
 
 async function fetchData() {
@@ -53,8 +53,8 @@ async function fetchData() {
         const json = await res.json();
         let data = json.record.members || json.record;
 
-        // Ensure all 12 members exist
-        for (let i = 1; i <= 12; i++) {
+        // Ensure all 13 members exist
+        for (let i = 1; i <= 13; i++) {
             if (!data.find(m => m.id == i)) {
                 data.push({ id: i, name: defaultNames[i], payments: {} });
             }
